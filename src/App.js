@@ -84,20 +84,25 @@ class App extends Component {
       return false;
     }
 
-    if (this.state.addressValue === undefined || this.state.addressValue === "") {
+    if ( this.state.address ) {
+      if (this.state.address.address1 === undefined || this.state.address.address1 === "") {
+        alert("Enter your address");
+        return false;
+      }
+    
+      if (this.state.address.address2 === undefined || this.state.address.address2 === "") {
+          alert("Enter your address");
+          return false;
+      }
+    
+      if (this.state.address.stateValue === "SELECT STATE") {
+        alert("Choose your state..");
+        return false;
+      }
+    } else {
       alert("Enter your address");
-      return false;
-  }
-
-  if (this.state.addressValue1 === undefined || this.state.addressValue1 === "") {
-      alert("Enter your address");
-      return false;
-  }
-
-  if (this.state.stateValue === "SELECT STATE") {
-    alert("Choose your state..");
-    return false;
-}
+          return false;
+    }
 
     var zip = /^\d{6}$/;
     var code = this.state.pincode;
@@ -118,6 +123,10 @@ class App extends Component {
     if (num == null || code == "" || !phoneno.test(num)) {
       alert("Invalid Phone Number");
     }
+  }
+
+  addressChange = (value) => {
+    this.setState({address: value});
   }
 
   render() {
@@ -163,7 +172,7 @@ class App extends Component {
             </div>
             <br />
             <div>
-              <Addressdetails handleChangeadd={this.handleChangeadd} handleChangeadd1={this.handleChangeadd1} handleChangeState={this.handleChangeState}/>
+              <Addressdetails onChange={this.addressChange}/>
 
 
             </div>

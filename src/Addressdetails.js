@@ -6,16 +6,17 @@ import App from "./App";
 class Addressdetails extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = {};
+        this.stateCache = {
             stateValue: "SELECT STATE",
             stateName: ["SELECT STATE", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
                 "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
                 "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
 
-            andhra: ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Srikakulam", "SriPotti Sri Ramulu Nellore",
+            "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Srikakulam", "SriPotti Sri Ramulu Nellore",
                 "Vishakhapatnam", "Vizianagaram", "West Godavari", "Cudappah"],
 
-            ap: ["Anjaw", "Changlang", "Dibang Valley", "East Siang", "East Kameng", "Kurung Kumey", "Lohit", "Longding", "Lower Dibang Valley", "Lower Subansiri", "Papum Pare",
+            "Arunachal Pradesh": ["Anjaw", "Changlang", "Dibang Valley", "East Siang", "East Kameng", "Kurung Kumey", "Lohit", "Longding", "Lower Dibang Valley", "Lower Subansiri", "Papum Pare",
                 "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"],
 
             assam: ["Baksa", "Barpeta", "Bongaigaon", "Cachar", "Chirang", "Darrang", "Dhemaji", "Dima Hasao", "Dhubri", "Dibrugarh", "Goalpara", "Golaghat", "Hailakandi", "Jorhat",
@@ -60,91 +61,33 @@ class Addressdetails extends Component {
                 "Tiruchirapalli", "Theni", "Tirunelveli", "Thanjavur", "Thoothukudi", "Tiruvallur", "Tiruvannamalai", "Vellore", "Villupuram", "Viruthunagar"]
         };
     }
+
+
     handleAddress1 = (e) => {
-        this.setState({ address1: e.target.value })
-        this.props.handleChangeadd(e.target.value);
+        this.setState({ address1: e.target.value }, () => {
+            this.props.onChange(this.state);
+        });
 
     }
     handleAddress2 = (e) => {
-        this.setState({ address2: e.target.value })
-        this.props.handleChangeadd1(e.target.value);
+        this.setState({ address2: e.target.value }, () => {
+            this.props.onChange(this.state);
+        });
 
     }
     handleChangeStateValue = (e) => {
-        this.setState({ stateValue: e.target.value });
-        this.props.handleChangeState(e.target.value);
+        this.setState({ stateValue: e.target.value }, () => {
+            this.props.onChange(this.state);
+        });
     }
 
-    addressValidation = () => {
-        // if (this.state.address1 === undefined || this.state.address1 === "") {
-        //     alert("Enter your address");
-        //     return false;
-        // }
-
-        // if (this.state.address2 === undefined || this.state.address2 === "") {
-        //     alert("Enter your address");
-        //     return false;
-        // }
-
-        // if (this.state.stateValue === "SELECT STATE") {
-        //     alert("Choose your state..");
-        //     return false;
-        // }
-    }
     render() {
+        var selectedState = this.state.stateValue;
         var arr = [];
-        if (this.state.stateValue === "Andhra Pradesh") {
-            arr = this.state.andhra;
+        if (selectedState && this.stateCache[selectedState]) {
+            arr = this.stateCache[selectedState];
         }
-        else if (this.state.stateValue === "Arunachal Pradesh") {
-            arr = this.state.ap;
-        }
-        else if (this.state.stateValue === "Assam") {
-            arr = this.state.assam;
-        }
-        else if (this.state.stateValue === "Bihar") {
-            arr = this.state.bihar;
-        }
-        else if (this.state.stateValue === "Chhattisgarh") {
-            arr = this.state.Chhattisgarh;
-        }
-        else if (this.state.stateValue === "Dadra and Nagar Haveli") {
-            arr = this.state.dadra;
-        }
-        else if (this.state.stateValue === "Daman and Diu") {
-            arr = this.state.daman;
-        }
-        else if (this.state.stateValue === "Delhi") {
-            arr = this.state.delhi;
-        }
-        else if (this.state.stateValue === "Goa") {
-            arr = this.state.goa;
-        }
-        else if (this.state.stateValue === "Gujarat") {
-            arr = this.state.gujarat;
-        }
-        else if (this.state.stateValue === "Haryana") {
-            arr = this.state.haryana;
-        }
-        else if (this.state.stateValue === "Himachal Pradesh") {
-            arr = this.state.himachal;
-        }
-        else if (this.state.stateValue === "West Bengal") {
-            arr = this.state.wb;
-        }
-        else if (this.state.stateValue === "Uttarakhand") {
-            arr = this.state.uttarakhand;
-        }
-        else if (this.state.stateValue === "Uttar Pradesh") {
-            arr = this.state.up;
-        }
-        else if (this.state.stateValue === "Telangana") {
-            arr = this.state.tn;
-        }
-        else if (this.state.stateValue === "Sikkim") {
-            arr = this.state.sikkim;
-        }
-
+        
         return (
             <div>
                 <div>
@@ -156,7 +99,7 @@ class Addressdetails extends Component {
                 <div>
                     <label htmlFor='stateDrop' />State: <select defaultValue={this.state.selectValue} onChange={this.handleChangeStateValue} id='statedd'>
                         {
-                            this.state.stateName.map((val) => {
+                            this.stateCache.stateName.map((val) => {
                                 return <option>{val}</option>
                             })
                         }
