@@ -7,8 +7,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addressValue:"",
-      stateValue : "SELECT STATE"
+      stateValue: "SELECT STATE",
+      pnumber: null ,
+      firstName: null,
+      lastName: null,
+      email: null,
+      genderChecked:null,
+      dateOfBirth:null,
+      address:null
     };
   }
   handleChangeFname = (e) => {
@@ -19,7 +25,6 @@ class App extends Component {
   }
   handleChangeRadio = (e) => {
     this.setState({ genderChecked: e.target.value })
-
   }
 
   handleChangePcode = (e) => {
@@ -28,24 +33,12 @@ class App extends Component {
   handleChangeEmail = (e) => {
     this.setState({ email: e.target.value })
   }
-  handleChangePnum = (e) => {
 
-    this.setState({ pnumber: e.target.value })
-  }
   handleChangeDob = (e) => {
     this.setState({ dateOfBirth: e.target.value })
   }
-
-  handleChangeadd = (val) =>{
-    this.setState({addressValue:val})
-  }
-
-  handleChangeadd1 = (val) =>{
-    this.setState({addressValue1:val})
-  }
-
-  handleChangeState = (val) =>{
-    this.setState({stateValue:val})
+  handleChangePnum = (e) => {
+    this.setState({ pnumber: e.target.value })
   }
 
   formValidation = () => {
@@ -58,7 +51,7 @@ class App extends Component {
       alert("Enter the valid First name");
       return false;
     }
-    console.log(this.state.lastName);
+    
     if (this.state.lastName === undefined || this.state.lastName === "") {
       alert("Enter the Last name");
       return false;
@@ -84,44 +77,68 @@ class App extends Component {
       return false;
     }
 
-    if (this.state.addressValue === undefined || this.state.addressValue === "") {
-      alert("Enter your address");
-      return false;
-  }
+    if (this.state.address) {
+      if (this.state.address.address1 === undefined || this.state.address.address1 === "") {
+        alert("Enter your address");
+        return false;
+      }
 
-  if (this.state.addressValue1 === undefined || this.state.addressValue1 === "") {
-      alert("Enter your address");
+      if (this.state.address.address2 === undefined || this.state.address.address2 === "") {
+        alert("Enter your address");
+        return false;
+      }
+      
+      if (this.state.address.stateValue === "SELECT STATE") {
+        alert("Choose your state..");
+        return false;
+      }
+    } else {
+      alert("Enter the address");
       return false;
-  }
-
-  if (this.state.stateValue === "SELECT STATE") {
-    alert("Choose your state..");
-    return false;
-}
+    }
 
     var zip = /^\d{6}$/;
-    var code = this.state.pincode;
+    var code = this.state.address.pincode;
     if (code == null || code == "" || !zip.test(code)) {
       alert("Enter the correct Pin Code");
       return false;
     }
-
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
     if (reg.test(this.state.email) === false) {
       alert('Invalid Email Address');
       return false;
     }
-    console.log(this.state.pnumber);
+    
     var phoneno = /^\d{10}$/;
     var num = this.state.pnumber;
     if (num == null || code == "" || !phoneno.test(num)) {
       alert("Invalid Phone Number");
+      return false;
     }
+    alert("You have successfully registered...");
+  }
+  addressChange = (value) => {
+    this.setState({ address: value });
   }
 
   render() {
-    return (
+
+    const {firstName, lastName, pnumber,email,dateOfBirth} = this.state;
+    var isEnable = true;
+    Object.keys(this.state).forEach((val) => {
+      if (!this.state[val])
+        isEnable = false;
+    }); 
+    console.log(this.state.address);
+   if(this.state.address !==null)
+    {
+    Object.keys(this.state.address).forEach((val) => {
+    if(!this.state.address[val])
+     isEnable = false
+     });
+    }
+     return (
       <div>
         <div className="App">
           <header className="App-header">
@@ -163,24 +180,15 @@ class App extends Component {
             </div>
             <br />
             <div>
-              <Addressdetails handleChangeadd={this.handleChangeadd} handleChangeadd1={this.handleChangeadd1} handleChangeState={this.handleChangeState}/>
-
-
+              <Addressdetails onChange={this.addressChange} />
             </div>
-            <br />
-            <label htmlFor='pinCode' />
-            Pincode:
-              <input type='text' id="pc" value={this.state.pincode} placeholder='Enter pincode...' onChange={this.handleChangePcode} />
-
             <div>
               <label htmlFor='email' />Email-id: <input type='text' id="eid" value={this.state.email} placeholder='Email-id.....' onChange={this.handleChangeEmail} />
             </div>
             <label htmlFor='phone' />Phone-No: <input type='text' id="pn" value={this.state.pnumber} placeholder='Number....' name='numb' onChange={this.handleChangePnum} />
             <div>
-              <button className="sub-btn" onClick={this.formValidation}> Submit </button>
+              <button className="sub-btn" onClick={this.formValidation} disabled={!isEnable}> Submit </button>
             </div>
-
-
           </div>
         </div>
       </div>
