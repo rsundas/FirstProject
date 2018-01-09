@@ -77,24 +77,42 @@ class App extends Component {
       return false;
     }
 
+<<<<<<< HEAD
     if (this.state.address) {
+=======
+    if ( this.state.address ) {
+>>>>>>> 71d9779baadcb0a0f1b5d4498ba52db43012711f
       if (this.state.address.address1 === undefined || this.state.address.address1 === "") {
         alert("Enter your address");
         return false;
       }
+<<<<<<< HEAD
 
       if (this.state.address.address2 === undefined || this.state.address.address2 === "") {
         alert("Enter your address");
         return false;
       }
       
+=======
+    
+      if (this.state.address.address2 === undefined || this.state.address.address2 === "") {
+          alert("Enter your address");
+          return false;
+      }
+    
+>>>>>>> 71d9779baadcb0a0f1b5d4498ba52db43012711f
       if (this.state.address.stateValue === "SELECT STATE") {
         alert("Choose your state..");
         return false;
       }
     } else {
+<<<<<<< HEAD
       alert("Enter the address");
       return false;
+=======
+      alert("Enter your address");
+          return false;
+>>>>>>> 71d9779baadcb0a0f1b5d4498ba52db43012711f
     }
 
     var zip = /^\d{6}$/;
@@ -120,6 +138,10 @@ class App extends Component {
   }
   addressChange = (value) => {
     this.setState({ address: value });
+  }
+
+  addressChange = (value) => {
+    this.setState({address: value});
   }
 
   render() {
@@ -180,7 +202,13 @@ class App extends Component {
             </div>
             <br />
             <div>
+<<<<<<< HEAD
               <Addressdetails onChange={this.addressChange} />
+=======
+              <Addressdetails onChange={this.addressChange}/>
+
+
+>>>>>>> 71d9779baadcb0a0f1b5d4498ba52db43012711f
             </div>
             <div>
               <label htmlFor='email' />Email-id: <input type='text' id="eid" value={this.state.email} placeholder='Email-id.....' onChange={this.handleChangeEmail} />

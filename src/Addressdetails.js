@@ -17,12 +17,14 @@ class Addressdetails extends Component {
         };
         this.cache = statelistname;
     }
-    handleAddress1 = (e) => {
+handleAddress1 = (e) => {
 
         this.setState({ address1: e.target.value }, () => {
             this.props.onChange(this.state);
         });
+
     }
+        
     handleAddress2 = (e) => {
         this.setState({ address2: e.target.value }, () => {
             this.props.onChange(this.state);
@@ -33,6 +35,7 @@ class Addressdetails extends Component {
             this.props.onChange(this.state);
         });
     }
+
     handleChangePcode = (e) => {
         this.setState({ pincode: e.target.value }, () => {
             this.props.onChange(this.state);
@@ -49,6 +52,8 @@ class Addressdetails extends Component {
         if (selectedState && this.cache[selectedState]) {
             selectedCity = this.cache[selectedState];
         }
+
+
         return (
             <div>
                 <div>
@@ -60,7 +65,9 @@ class Addressdetails extends Component {
                 <div>
                     <label htmlFor='stateDrop' />State: <select defaultValue={this.cache.stateValue} onChange={this.handleChangeStateValue} id='statedd'>
                         {
+
                             this.cache.stateName.map((val) => {
+
                                 return <option>{val}</option>
                             })
                         }
